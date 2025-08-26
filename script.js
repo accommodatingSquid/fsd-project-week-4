@@ -42,7 +42,17 @@ function handleInput(input) {
   // Your code here
   // Use if statements to check what type of input was received
   // Then call the appropriate helper function
-
+    if (isNaN(input)){ 
+      if (input == '.'){
+        handleDecimal();
+      }else if (input=='C'){
+        resetCalculator();
+      }else if (input=='='){
+        executeOperation();
+      }
+    }else{
+      handleNumber(input);
+    }
   // Don't forget to call updateDisplay() at the end!
 }
 
@@ -60,6 +70,7 @@ function handleNumber(number) {
   // Your code here
   // This function should update the displayValue
   // Consider: Are we starting fresh? Continuing a number?
+  
 }
 
 /**

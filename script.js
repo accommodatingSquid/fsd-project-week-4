@@ -49,19 +49,44 @@ function handleInput(input) {
         resetCalculator();
       }else if (input=='='){
         executeOperation();
+      }else{
+        handleOperator(input)
       }
     }else{
       handleNumber(input);
     }
   // Don't forget to call updateDisplay() at the end!
 }
-
+let firstNumber = 0;
+let secondNumber = 0;
+let isSecondNumber = false;
+let operator = 0;
 // TODO: Create your arithmetic operation functions here
 // You will need: add, subtract, multiply, and divide functions
 // Each should take two parameters (first, second) and return the result
 // Don't forget to add console.log statements for debugging!
 // Remember: division should check for division by zero and return "Error"
 
+
+function multiply(num1, num2){
+  return num1 * num2;
+}
+
+function divide(num1, num2){
+  if (num2 == 0){
+    return console.error("divide by zero.")
+  }else{
+    return num1 / num2;
+  }
+}
+
+function add(num1, num2){
+  return num1 + num2;
+}
+
+function subtract(num1, num2){
+  return num1 - num2;
+}
 /**
  * Handles number input (0-9)
  * @param {string} number - The number that was clicked
@@ -70,7 +95,15 @@ function handleNumber(number) {
   // Your code here
   // This function should update the displayValue
   // Consider: Are we starting fresh? Continuing a number?
-  
+  if (!isSecondNumber){
+    firstNumber = firstNumber.toString().concat(number);
+    updateDisplay(firstNumber);
+    console.log(firstNumber);
+  }else{
+    secondNumber = secondNumber.toString().concat(number);
+  updateDisplay(secondNumber);
+  console.log(secondNumber);
+  }
 }
 
 /**
@@ -89,6 +122,20 @@ function handleOperator(nextOperator) {
   // Your code here
   // Store the first number and operator
   // Prepare for the second number input
+
+  switch(nextOperator){
+    case '/':
+      operator = 1;
+    case '*':
+      operator = 2;
+    case '-':
+      operator = 3;
+    case '+':
+      operator = 4;
+  }
+  updateDisplay(0);
+  isSecondNumber = true;
+
 }
 
 /**
@@ -98,6 +145,21 @@ function executeOperation() {
   // Your code here
   // Use if/else statements to call the right operation function
   // Handle the result and any errors
+  let result = 0;
+  switch(operator){
+    case 1:
+      result = divide(Number(firstNumber),Number(secondNumber));
+    case 2:
+      result = multiply(Number(firstNumber),Number(secondNumber));
+    case 3:
+      result = subtract(Number(firstNumber),Number(secondNumber));
+    case 4:
+      result = add(Number(firstNumber),Number(secondNumber));
+    }
+    firstNumber = result;
+    secondNumber = 0;
+    updateDisplay(result);
+    
 }
 
 /**
@@ -106,4 +168,9 @@ function executeOperation() {
 function resetCalculator() {
   // Your code here
   // Reset all state variables and display
+  isSecondNumber = false;
+  firstNumber = 0;
+  secondNumber = 0;
+  operator = 0;
+  updateDisplay(0);
 }
